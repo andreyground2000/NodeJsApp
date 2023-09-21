@@ -3,11 +3,12 @@ const MongoClient = mongoDb.MongoClient;
 
 let _db;
 
-const mongoConnect = () => {
+const mongoConnect = (cb) => {
   MongoClient.connect('mongodb+srv://JJXzEZwt0Wi5N4UA:JJXzEZwt0Wi5N4UA@rocafella.xuhueax.mongodb.net/nodeshop?retryWrites=true&w=majority')
     .then(client => {
       console.log('Connected successfully');
       _db = client.db();
+      cb(client)
     })
     .catch(err => console.log(err));
 }
