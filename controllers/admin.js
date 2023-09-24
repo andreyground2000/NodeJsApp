@@ -2,7 +2,7 @@
 const Product = require('../models/product');
 
 exports.getProducts = (req, res) => {
-  Product.fetchAll()
+  Product.find()
     .then(products => {
       res.render('admin/products', {
         prods: products,
@@ -27,7 +27,7 @@ exports.postAddProduct = (req, res) => {
   const price = req.body.price;
   const description = req.body.description;
 
-  const product = new Product(title, price , imageUrl, description, null, req.user._id);
+  const product = new Product({ title, price, imageUrl, description });
 
   product.save()
     .then(() => res.redirect('/admin/products'))
@@ -43,7 +43,7 @@ exports.getEditProduct = (req, res, next) => {
 
   const id = req.params.productId;
 
-  Product.fetchProduct(id)
+  Product.findById(id)
   .then(product=> {
     if (!product) {
       return res.redirect('/');
@@ -59,8 +59,15 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.postEditProduct = (req, res) => {
+  const {
+    title,
+    price,
+    imageUrl,
+    description,
+    productId
+  } = req.body
   Product
-    .editProduct(req.body)
+    .findByIdAndUpdate(productId, { title, price, imageUrl, description })
     .then(() => {
       res.redirect('/admin/products');
     })
@@ -71,7 +78,7 @@ exports.postDeleteProduct = (req, res) => {
   const { productId } = req.body;
   
   Product
-    .deleteProduct(productId)
+    .findByIdAndRemove(productId)
     .then(() => {
       res.redirect('/admin/products');
     })
