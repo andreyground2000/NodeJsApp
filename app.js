@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-// const User = require('./models/user');
+const User = require('./models/user');
 
 const errorController = require('./controllers/error');
 
@@ -19,14 +19,14 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-//   User.fetchUser('650721593ffafd7e2fe0748e')
-//     .then(user => {
-//       req.user = new User(user.email, user.name, user._id, user.cart);
-//       next();
-//     })
-//     .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById('65182ac4c21363d9b75e5bff')
+    .then(user => {
+      req.user = user
+      next();
+    })
+    .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -36,5 +36,19 @@ app.use(errorController.get404);
 
 mongoose
   .connect('mongodb+srv://JJXzEZwt0Wi5N4UA:JJXzEZwt0Wi5N4UA@rocafella.xuhueax.mongodb.net/nodeshop?retryWrites=true&w=majority')
-  .then(() => app.listen(3000))
+  .then(() => {
+    User.findOne().then(user => {
+      if (!user) {
+        const user = new User({
+          name: 'Spawn',
+          email: 'vertigo@gmail.com',
+          cart: {
+            items: []
+          }
+        });
+        user.save();
+      }
+    })
+    app.listen(3000);
+  })
   .catch((err) => console.log(err))
