@@ -8,7 +8,8 @@ exports.getProducts = (req, res) => {
         prods: products,
         pageTitle: 'Admin Products',
         path: '/admin/products',
-        isLoggedIn: req.session.isLoggedIn
+        isLoggedIn: req.session.isLoggedIn,
+        role: req.user.role
       });
     })
     .catch(err => console.log(err));
@@ -19,7 +20,8 @@ exports.getAddProduct = (req, res) => {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
     editing: false,
-    isLoggedIn: req.session.isLoggedIn
+    isLoggedIn: req.session.isLoggedIn,
+    role: req.user.role
   });
 };
 
@@ -28,7 +30,7 @@ exports.postAddProduct = (req, res) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  const user = reqs.user;
+  const user = req.user;
 
   const product = new Product({ title, price, imageUrl, description, userId: user._id});
 
@@ -57,7 +59,8 @@ exports.getEditProduct = (req, res, next) => {
       path: '/admin/edit-product',
       product,
       editing: editMode,
-      isLoggedIn: req.session.isLoggedIn
+      isLoggedIn: req.session.isLoggedIn,
+      role: req.user.role
     });
   });
 };

@@ -44,10 +44,10 @@ passport.use(new LocalStrategy(
     User.findOne({ email })
     .then(user => {
       if (!user) {
-        return done(null, false, { message: 'Incorrect email.' });
+        return done(null, false, { message: 'Incorrect email or password' });
       }
       if (!bcrypt.compareSync(password, user.password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+        return done(null, false, { message: 'Incorrect email or password' });
       }
       return done(null, user);
     })

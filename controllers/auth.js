@@ -38,7 +38,7 @@ exports.postLogin = (req, res, next) => {
 exports.postSignup = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
+  const isAdmin = req.body.isAdmin;
   
   User.findOne({ email })
     .then((userDoc) => {
@@ -52,6 +52,7 @@ exports.postSignup = (req, res, next) => {
           const user = new User({
             email,
             password: hashedPassword,
+            role: isAdmin ? 'admin' : 'user',
             cart: { items: [] }
           });
     
@@ -67,6 +68,6 @@ exports.postSignup = (req, res, next) => {
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
     console.log(err);
-    res.redirect('/');
+    res.redirect('/products');
   });
 };
