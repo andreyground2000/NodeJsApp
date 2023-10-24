@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
     "start-server": "node app.js",
-    "lint:fix": "eslint ./ --fix"
+    "lint:fix": "eslint ./ --fix",
+    "format": "prettier --write ./**/*.{js,ejs,css,less,md,json} --config ./.prettierrc.json"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +18,8 @@
     "eslint-plugin-prettier": "^5.0.1",
     "esprima": "^4.0.1",
     "nodemon": "^1.18.3",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "prettier-plugin-ejs": "^0.0.18"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
