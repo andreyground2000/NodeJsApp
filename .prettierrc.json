@@ -1,5 +1,4 @@
 {
-  "parser": "prettier-plugin-ejs",
   "semi": true,
   "tabWidth": 2,
   "printWidth": 80,
