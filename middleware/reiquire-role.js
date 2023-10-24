@@ -3,7 +3,7 @@ module.exports = (role) => {
     if (req.user.role === role) {
       return next();
     } else {
-      res.status(403).send('Access Denied');
+      res.status(403).send("Access Denied");
     }
-  }
-}
+  };
+};

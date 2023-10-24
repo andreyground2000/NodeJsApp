@@ -6,12 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js",
-    "start-server": "node app.js"
+    "start-server": "node app.js",
+    "lint:fix": "eslint ./ --fix"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "esprima": "^4.0.1",
+    "nodemon": "^1.18.3",
+    "prettier": "^3.0.3"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
